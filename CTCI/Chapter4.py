@@ -34,6 +34,7 @@ class TreeNode:
         self.val = val
         self.left = None
         self.right = None
+        self.parent = None
 
 """
 4.1 Route between Nodes
@@ -71,3 +72,175 @@ def tree_from_array(array,start,end):
     root.left = tree_from_array(array,start,mid)
     root.right = tree_from_array(array,mid+1,end)
     return root
+
+
+"""
+4.3 List of depths.
+"""
+
+class Solution43:
+    def __init__(self):
+        self.lists = []
+
+    def create_lists(self,root):
+        return self.generate_lists(root,0)
+
+    def generate_lists(self,root,level):
+        if not root:
+            return None
+
+        list = None
+        if len(self.lists) == level:
+            list = [root.val]
+            self.lists.append(list)
+        else:
+            list = self.lists[level]
+            list.append(root.val)
+
+        self.generate_lists(root.left, level+1)
+        self.generate_lists(root.right, level+1)
+
+
+"""
+4.4 Check balanced
+"""
+#top-down
+
+def depth(root):
+    if not root:
+        return 0
+
+    return max(depth(root.left), depth(root.right)) + 1
+
+def is_balanced1(root):
+    if not root:
+        return True
+
+    if abs(depth(root.left) - depth(root.right)) > 1:
+        return False
+
+    return is_balanced1(root.left) and is_balanced1(root.right)
+
+#bottom-up
+
+def is_balanced2(root):
+    if not root:
+        return 0
+
+    left = is_balanced2(root.left)
+    if left == -1:
+        return -1
+
+    right = is_balanced2(root.right)
+    if right == -1:
+        return -1
+
+    if abs(left-right) > 1:
+        return -1
+    else:
+        return max(is_balanced2(root.left),is_balanced2(root.right)) + 1
+
+
+"""
+4.5 Validate BST
+"""
+
+
+def is_bst(root,low,high):
+    if not root:
+        return True
+
+    return root.val > low and root.val < high and is_bst(root.left,low,root.val) and is_bst(root.right,root.val,high)
+
+
+class Sol44:
+    def __init__(self):
+        self.val = None
+
+
+    def is_bst2(self,root):
+        if not root:
+            return True
+
+        if self.is_bst2(root.left):
+            if not self.val or root.val > self.val:
+                val = root.val
+                return self.is_bst2(root.right)
+            else:
+                return False
+        else:
+            return False
+
+
+"""
+4.6 Successor
+"""
+
+def successor_node(node):
+    if not node:
+        return None
+
+    succ = None
+    if node.right:
+        succ = node.right
+        while succ.left:
+            succ = succ.left
+    else:
+        succ = node.parent
+        while node == succ.right:
+            node = succ
+            succ = succ.parent
+
+    return succ
+
+
+"""
+4.7 Build Order
+"""
+
+class Sol47:
+
+    def __init__(self,graph):
+        self.graph = graph
+
+    def build_order(self):
+        self.order = []
+        self.visited = set()
+        for node in self.graph:
+            if node not in self.visited:
+                self.dfs(node)
+
+    def dfs(self,node):
+        self.visited.add(node)
+        for neighbour in self.graph[node]:
+            if neighbour not in self.visited:
+                self.dfs(neighbour)
+
+        self.order.append(node)
+
+
+
+"""
+4.8 First Common Ancestor
+"""
+
+def LCA(root,p,q):
+    if not root:
+        return None
+
+    if root == p or root == q:
+        return root
+
+    L = LCA(root.left, p, q)
+    R = LCA(root.right,p, q)
+
+    if L and R:
+        return root
+
+    return L or R
+
+
+
+"""
+4.9 BST Sequences
+"""
