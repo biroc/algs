@@ -240,7 +240,76 @@ def LCA(root,p,q):
     return L or R
 
 
-
 """
 4.9 BST Sequences
 """
+
+
+"""
+4.10 Check subtree T1,T2
+"""
+
+def check_tree(t1, t2):
+    if not t2:
+        return True
+
+    return is_subtree(t1,t2)
+
+
+def is_subtree(t1, t2):
+    if not t1:
+        return False
+
+    if t1.val == t2.val and is_match(t1,t2):
+        return True
+
+    return is_subtree(t1.left,t2) or is_subtree(t1.right,t2)
+
+
+def is_match(t1, t2):
+    if not t2:
+        return True
+    if not t1:
+        return False
+
+    if t1.val != t2.val:
+        return False
+
+    return is_match(t1.left, t2.left) and is_match(t1.right, t2.right)
+
+"""
+4.11 Random Node.
+"""
+
+
+"""
+4.12 Paths with Sum
+"""
+
+class Sol412:
+    def __init__(self):
+        self.solutions = []
+
+    def count_paths(self, root, target):
+        if not root:
+            return 0
+
+        root_paths = self.count_node_paths(root, target, 0)
+
+        left = self.count_node_paths(root.left, target, 0)
+        right = self.count_node_paths(root.right, target, 0)
+        return root_paths + left + right
+
+    def count_node_paths(self, root, target, current):
+        if not root:
+            return 0
+
+        current += root.val
+        total_paths = 0
+        if current == target:
+            total_paths += 1
+
+        total_paths += self.count_node_paths(root.left, target, current)
+        total_paths += self.count_node_paths(root.right, target, current)
+
+        return total_paths
