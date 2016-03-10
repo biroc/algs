@@ -9,11 +9,12 @@ class Solution(object):
                 b ^= num
         
         return [a,b]
-        
+
+
+
     def find_1(self,nums):
         comb = 0
         for num in nums:
             comb ^= num
             
         return comb & (~(comb-1))
-        

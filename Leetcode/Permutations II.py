@@ -49,3 +49,13 @@ def perm_iterative(input):
 
         perms = new
     return perms
+
+
+def perm3(string,perm=""):
+    if not string:
+        print(perm)
+
+    for i in range(len(string)):
+        x = string[i]
+        xs = string[:i] + string[i+1:]
+        perm3(xs,perm + x)
