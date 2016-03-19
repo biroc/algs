@@ -15,6 +15,7 @@ class Solution(object):
             self.paths[row+1][col] = self.search_paths(row+1,col,m,n)
         if self.paths[row][col+1] == -1:
             self.paths[row][col+1] = self.search_paths(row,col+1,m,n)
+            
 
         return self.paths[row+1][col] + self.paths[row][col+1]
 
@@ -28,4 +29,3 @@ class Solution(object):
                 self.paths[row][col] = self.paths[row+1][col] + self.paths[row][col+1]
 
         return self.paths[0][0]
-                
