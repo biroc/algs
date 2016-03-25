@@ -287,8 +287,6 @@ def is_match(t1, t2):
 """
 
 class Sol412:
-    def __init__(self):
-        self.solutions = []
 
     def count_paths(self, root, target):
         if not root:
