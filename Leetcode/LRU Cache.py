@@ -54,4 +54,3 @@ class LRUCache(object):
                 self.remove(self.tail)
             self.set_head(new)
             self.map[new.key] = new
-
