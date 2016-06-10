@@ -12,17 +12,20 @@ def insertion(N,M,i,j):
 
 """
 5.2 Binary to String
+Given a real number between 0 and 1 (e.g. 0.72) that is passed in as a double,
+print the binary representation. If the number cannot be represented accurately
+in binary with at most 32 characters, print "ERROR"
 """
 def convert_binary(number):
-    string = "0."
+    string = "."
     while number > 0:
-        r = number * 2
-        if r >= 1:
+        r = number * 2 # shift the number to the left one bit
+        if r >= 1: # if the number is greater than 1, that left-most bit was 1
             string += "1"
-            number = r - 1
+            number = r - 1 # set the value to the remaining value
         else:
-            string += "0"
-            number = r
+            string += "0" # if the number is 0 or below 0, the left-most bit was 0
+            number = r # set the number to the remaining value
 
     if len(string) <= 32:
         return string
@@ -31,6 +34,8 @@ def convert_binary(number):
 
 """
 5.3
+You have an integer and you can flip exactly one bit from a 0 to a 1. Write code to
+find the length of the longest sequence of 1s you could create.
 """
 def largest_flip(number):
     largest = head = tail = 0
@@ -49,6 +54,8 @@ def largest_flip(number):
 
 """
 5.4 Next Number
+Given a positive integer, print the next smallest and the next largest number that
+have the same number of 1 bits in their binary representation.
 """
 
 # 1
@@ -121,6 +128,8 @@ def is_pow2(num):
     return False
 """
 5.6 Conversion
+Write a function to determine the number of bits you would need to flip to convert
+integer A to integer B.
 """
 def num_flips(num1,num2):
     flips = 0
