@@ -155,7 +155,22 @@ def string_compression(string):
 """
 1.7 Rotate Matrix
 """
+def rotate_90(matrix):
+    length = len(matrix) - 1
+    layers = len(matrix) // 2
+    for curr_layer in range(layers):
+        for i in range(curr_layer, length - curr_layer):
+            top = matrix[curr_layer][i]
+            # left - > top
+            matrix[curr_layer][i] = matrix[length - i][curr_layer]
+            # bottom -> left
+            matrix[length - i][curr_layer] = matrix[length - curr_layer][length - i]
+            # right -> bottom
+            matrix[length - curr_layer][length - i] = matrix[i][length - curr_layer]
+            # top - > right
+            matrix[i][length - curr_layer] = top
 
+    return matrix
 """
 1.8 Zero Matrix
 """
