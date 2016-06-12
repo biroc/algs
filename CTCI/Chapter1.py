@@ -155,6 +155,8 @@ def string_compression(string):
 """
 1.7 Rotate Matrix
 """
+
+
 def rotate_90(matrix):
     length = len(matrix) - 1
     layers = len(matrix) // 2
@@ -174,6 +176,55 @@ def rotate_90(matrix):
 """
 1.8 Zero Matrix
 """
+
+
+def zero_matrix(matrix):
+    zeroRow = False
+    zeroCol = False
+
+    # Check if first row has a zero
+    for i in range(len(matrix[0])):
+        if matrix[0][i] == 0:
+            zeroRow = True
+            break
+
+    # Check if first col has a zero
+    for i in range(len(matrix)):
+        if matrix[i][0] == 0:
+            zeroCol = True
+            break
+
+    # Check for zeros in all spaces beside first row/col
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 0:
+                matrix[0][j] = 0
+                matrix[i][j] = 0
+
+    # Nullify rows and cols
+    for i in range(1,len(matrix[0])):
+        if matrix[0][i] == 0:
+            nullifyCol(i,matrix)
+
+    for i in range(1,len(matrix)):
+        if matrix[i][0] == 0:
+            nullifyRow(i,matrix)
+
+    if zeroRow:
+        nullifyRow(0,matrix)
+
+    if zeroCol:
+        nullifyCol(0,matrix)
+
+
+def nullifyRow(index, matrix):
+    for i in range(len(matrix[index])):
+        matrix[index][i] = 0
+
+
+def nullifyCol(index, matrix):
+    for i in range(len(matrix)):
+        matrix[i][index] = 0
 
 
 """
