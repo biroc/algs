@@ -69,7 +69,7 @@ def tree_from_array(array,start,end):
 
     mid = (start + end) >> 1
     root = TreeNode(array[mid])
-    root.left = tree_from_array(array,start,mid)
+    root.left = tree_from_array(array,start,mid-1)
     root.right = tree_from_array(array,mid+1,end)
     return root
 
@@ -206,18 +206,26 @@ class Sol47:
     def build_order(self):
         self.order = []
         self.visited = set()
+        self.partial = set()
         for node in self.graph:
             if node not in self.visited:
-                self.dfs(node)
+                if not self.dfs(node):
+                    return None
+        return self.order[::-1]
 
     def dfs(self,node):
-        self.visited.add(node)
+        if node in self.partial:
+            return False
+
         for neighbour in self.graph[node]:
+            self.partial.add(node)
             if neighbour not in self.visited:
-                self.dfs(neighbour)
+                if not self.dfs(neighbour):
+                    return False
 
+        self.visited.add(node)
         self.order.append(node)
-
+        return True
 
 
 """
@@ -243,17 +251,64 @@ def LCA(root,p,q):
 """
 4.9 BST Sequences
 """
+def weave_lists(first, second, results, prefix=[]):
+    # Base Case
+    # Check if first or second are empty
+    if not first or not second:
+        # Prepend prefix
+        result = prefix[:]
+        result.extend(first)
+        result.extend(second)
 
+        # Add to final results
+        results.append(result)
+        return
+
+    # Remove elements and recurse
+    # Use backtracking to put items back
+    # Always remove first element of array
+
+    headFirst = first.pop(0)
+    prefix.append(headFirst)
+    weave_lists(first,second,results,prefix)
+    prefix.pop()
+    first.insert(0,headFirst)
+
+    headSecond = second.pop(0)
+    prefix.append(headSecond)
+    weave_lists(first,second,results,prefix)
+    prefix.pop()
+    second.insert(0,headSecond)
+
+def allSequences(root):
+    # All results stored here
+    result = []
+    # Base case, no node.
+    if not root:
+        result.append([])
+        return result
+
+    # We are going to use the value of the current node as
+    # a prefix to the arrays from the subtrees that are going to be weaved.
+    prefix = [root.val]
+
+    # Recurse in subtrees
+    leftSequences = allSequences(root.left)
+    rightSequences = allSequences(root.right)
+
+    # To try out all possible combinations. Weave together each list from each side.
+    for leftSeq in leftSequences:
+        for rightSeq in rightSequences:
+            # Store weave results
+            weaved = []
+            weave_lists(leftSeq,rightSeq,weaved,prefix)
+            result.extend(weaved)
+
+    return result
 
 """
 4.10 Check subtree T1,T2
 """
-
-def check_tree(t1, t2):
-    if not t2:
-        return True
-
-    return is_subtree(t1,t2)
 
 
 def is_subtree(t1, t2):
@@ -280,7 +335,46 @@ def is_match(t1, t2):
 """
 4.11 Random Node.
 """
+import random
+class RandomTree:
+    def __init__(self,val):
+        self.val = val
+        self.size = 1 # the current node counts to the size
+        self.left = None
+        self.right = None
 
+    def insert(self,val):
+        if val <= self.val:
+            if not self.left:
+                self.left = RandomTree(val)
+            else:
+                self.left.insert(val)
+        else:
+            if not self.right:
+                self.right = RandomTree(val)
+            else:
+                self.right.insert(val)
+
+        self.size += 1
+
+    def find(self,val):
+        if self.val == val:
+            return self
+        elif self.val < val:
+            self.right.find(val)
+        else:
+            self.left.find(val)
+
+
+    def getRandomNode(self):
+        leftSize = self.left.size if self.left else 0
+        index = random.randint(0,leftSize)
+        if index < leftSize:
+            return self.left.getRandomNode()
+        elif index == leftSize:
+            return self
+        else:
+            return self.right.getRandomNode()
 
 """
 4.12 Paths with Sum
