@@ -101,12 +101,14 @@ def is_pal_permut(string):
 """
 1.5 One Away
 """
+
+
 def isOneEditDistance(self, s, t):
     """
-    :type s: str
-    :type t: str
-    :rtype: bool
-    """
+	:type s: str
+	:type t: str
+	:rtype: bool
+	"""
     m = len(s)
     n = len(t)
 
@@ -116,17 +118,17 @@ def isOneEditDistance(self, s, t):
         return False
 
     if m < n:
-        return isOneEditDistance(t, s)
+        return self.isOneEditDistance(t, s)
 
     i = 0
     while i < n and s[i] == t[i]:
-        i = i + 1
+        i += 1
 
     if diff == 0:
-        i = i + 1
+        i += 1
 
     while i < n and s[i + diff] == t[i]:
-        i = i + 1
+        i += 1
 
     return i == n
 
