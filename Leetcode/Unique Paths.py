@@ -22,7 +22,7 @@ class Solution(object):
 #Bottom-up
 class Solution(object):
     def uniquePaths(self, m, n):
-        self.paths = [[0 for i in range(n+1)] for j in range (m+1)]
+        self.paths = [[0 for i in range(n+1)] for j in range(m+1)]
         self.paths[m-1][n] = 1
         for row in range(m-1,-1,-1):
             for col in range(n-1,-1,-1):

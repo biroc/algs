@@ -101,33 +101,34 @@ def is_pal_permut(string):
 """
 1.5 One Away
 """
+def isOneEditDistance(self, s, t):
+    """
+    :type s: str
+    :type t: str
+    :rtype: bool
+    """
+    m = len(s)
+    n = len(t)
 
-def one_away(first,second):
-    diff = abs(len(first) - len(second))
+    diff = abs(m - n)
+
     if diff > 1:
         return False
 
-    changes = 0
-    i = j = 0
-    while i < len(first) and j < len(second):
-        if first[i] != second[j]:
-            if not diff:
-                i += 1
-                j += 1
-                changes += 1
-            else:
-                if first[i+1] == second[j]:
-                    i += 2
-                    j += 1
-                elif first[i] == second[j+1]:
-                    i += 1
-                    j += 2
-                else:
-                    return False
-        else:
-            i += 1
-            j += 1
-    return changes < 2
+    if m < n:
+        return isOneEditDistance(t, s)
+
+    i = 0
+    while i < n and s[i] == t[i]:
+        i = i + 1
+
+    if diff == 0:
+        i = i + 1
+
+    while i < n and s[i + diff] == t[i]:
+        i = i + 1
+
+    return i == n
 
 """
 1.6 String Compression

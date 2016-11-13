@@ -5,6 +5,12 @@ class Solution(object):
   
         found = {}
         tail = head = max_length = 0
+        # use sliding window with constraint of maximum
+        # 2 distinct elements in the hashmap
+        # when 3 distinct elements are found, we want to eliminate
+        # the character whos last found position is the left-most,
+        # to make sure we have only 2 distinct characters going forward
+        # we start from that position + 1
         while head < len(s):
             found[s[head]] = head
             head += 1
@@ -18,5 +24,3 @@ class Solution(object):
             max_length = max(max_length, head - tail)
         
         return max_length
-
-        

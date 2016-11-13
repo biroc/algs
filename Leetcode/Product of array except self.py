@@ -12,4 +12,3 @@ class Solution(object):
             running_prod *= nums[i]
 
         return result
-        

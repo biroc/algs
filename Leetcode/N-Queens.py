@@ -37,4 +37,3 @@ class Solution(object):
                 return False
             i += 1
         return True
-        

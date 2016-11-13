@@ -13,7 +13,6 @@ class Solution(object):
 
         return s[start:end+1]
 
-
     def expand(self,string,left,right):
         while left >= 0 and right < len(string) and string[left] == string[right]:
             left -= 1

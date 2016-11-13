@@ -18,4 +18,3 @@ class Solution(object):
                 result += stack.pop()
                 current, sign = 0, 1
         return result + (sign * current)
-        
